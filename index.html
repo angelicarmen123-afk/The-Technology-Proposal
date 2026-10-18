@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Angeli & Team - Online Gym & Transformation Hub</title>
+    <style>
+        :root {
+            --bg-primary: #090d16;
+            --bg-card: #131c31;
+            --bg-card-hover: #1e293b;
+            --accent-pink: #ec4899;
+            --accent-cyan: #06b6d4;
+            --accent-purple: #8b5cf6;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border: #334155;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-main);
+            margin: 0;
+            padding: 30px 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1100px;
+            display: grid;
+            gap: 30px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #1e1b4b, #131c31);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 4px;
+            background: linear-gradient(90deg, var(--accent-pink), var(--accent-cyan), var(--accent-purple));
+        }
+
+        header h1 {
+            margin: 0 0 10px 0;
+            font-size: 36px;
+            background: linear-gradient(90deg, #f472b6, #38bdf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 18px;
+            margin: 0;
+        }
+
+        section {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            font-size: 22px;
+            color: var(--accent-cyan);
+            margin-top: 0;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 10px;
+        }
+
+        /* Transformation Gallery */
+        .transformation-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+        }
+
+        @media(min-width: 768px) {
+            .transformation-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .photo-card {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .photo-badge {
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            align-self: center;
+        }
+
+        .badge-before { background-color: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.4); }
+        .badge-after { background-color: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4); }
+
+        .photo-frame {
+            width: 100%;
+            height: 480px;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--border);
+        }
+
+        .photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* Keeps full photo aspect ratio without cropping */
+            background-color: #000;
+            transition: transform 0.3s ease;
+        }
+
+        .photo-frame img:hover {
+            transform: scale(1.02);
+        }
+
+        .photo-caption {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin: 0;
+            line-height: 1.4;
+        }
+
+        /* Interactive Timer Section */
+        .timer-box {
+            text-align: center;
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            border: 2px solid var(--accent-cyan);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 0 30px rgba(6, 182, 212, 0.15);
+        }
+
+        .timer-display {
+            font-size: 72px;
+            font-weight: 800;
+            color: var(--accent-cyan);
+            font-variant-numeric: tabular-nums;
+            margin: 15px 0;
+            text-shadow: 0 0 20px rgba(6, 182, 212, 0.4);
+        }
+
+        .timer-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            background-color: var(--accent-cyan);
+            color: #0f172a;
+            border: none;
+            padding: 12px 28px;
+            font-size: 16px;
+            font-weight: 700;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(6, 182, 212, 0.3);
+        }
+
+        button:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        button.btn-secondary {
+            background-color: #334155;
+            color: var(--text-main);
+            box-shadow: none;
+        }
+
+        /* 5 Agents & Skills Grid */
+        .grid-3 {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        @media(min-width: 768px) {
+            .grid-3 {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .agent-card, .skill-card {
+            background: var(--bg-card-hover);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 20px;
+            transition: transform 0.2s;
+        }
+
+        .agent-card:hover, .skill-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent-cyan);
+        }
+
+        .agent-name {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 4px;
+        }
+
+        .agent-role {
+            font-size: 13px;
+            color: var(--accent-pink);
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .skill-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--accent-cyan);
+            margin-bottom: 8px;
+        }
+
+        p {
+            color: var(--text-muted);
+            font-size: 14px;
+            line-height: 1.5;
+            margin: 0 0 10px 0;
+        }
+
+        footer {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 13px;
+            padding: 20px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <h1>Angeli's Online Gym & Transformation Hub</h1>
+            <p>From January 2025 Beach Foundation to October 2026 Peak Fitness & Studio Launch</p>
+        </header>
+
+        <!-- Transformation Gallery -->
+        <section>
+            <h2>🔥 Personal Transformation Gallery</h2>
+            <div class="transformation-grid">
+                <!-- Before -->
+                <div class="photo-card">
+                    <span class="photo-badge badge-before">Before &bull; January 2025</span>
+                    <div class="photo-frame">
+                        <!-- Put your before image file in the same folder and name it before.jpg -->
+                        <img src="before.jpg" alt="January 2025 Foundation">
+                    </div>
+                    <p class="photo-caption">Foundation build at Copacabana beach, setting the baseline for strength, mobility, and confidence.</p>
+                </div>
+                <!-- After -->
+                <div class="photo-card">
+                    <span class="photo-badge badge-after">After &bull; October 2026</span>
+                    <div class="photo-frame">
+                        <!-- Put your after image file in the same folder and name it after.jpg -->
+                        <img src="after.jpg" alt="October 2026 Progression">
+                    </div>
+                    <p class="photo-caption">Current training milestone in full gear. Structured progressive overload, toned definition, and active studio readiness.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive 60-Second Workout Timer -->
+        <section class="timer-box">
+            <h2>⏱️ Live 60-Second Workout Timer</h2>
+            <p>Use this built-in timer for your intervals, core holds, or quick pre-session warm-ups!</p>
+            <div id="timerDisplay" class="timer-display">01:00</div>
+            <div class="timer-controls">
+                <button id="startBtn" onclick="startTimer()">Start Timer</button>
+                <button class="btn-secondary" onclick="pauseTimer()">Pause</button>
+                <button class="btn-secondary" onclick="resetTimer()">Reset (60s)</button>
+            </div>
+        </section>
+
+        <!-- 5-Agent Expert Team -->
+        <section>
+            <h2>👥 Your Expert AI Team</h2>
+            <div class="grid-3">
+                <div class="agent-card">
+                    <div class="agent-name">Dara Okonkwo</div>
+                    <div class="agent-role">Maker & Launch Engineer</div>
+                    <p>Focuses on practical tools, simple booking flows, and robust tech checklists.</p>
+                </div>
+                <div class="agent-card">
+                    <div class="agent-name">Ife Adeyemi</div>
+                    <div class="agent-role">Scientist & Research Lead</div>
+                    <p>Checks scientific validity, market data, and safety boundaries for fitness claims.</p>
+                </div>
+                <div class="agent-card">
+                    <div class="agent-name">Kasia Brandt</div>
+                    <div class="agent-role">Communicator & Voice Lead</div>
+                    <p>Crafts engaging launch copy, community invites, and post-session follow-up testimonials.</p>
+                </div>
+                <div class="agent-card">
+                    <div class="agent-name">Lucia Marchetti</div>
+                    <div class="agent-role">Designer & Experience Lead</div>
+                    <p>Shapes session vibes, participant journeys, and the memorable first 60 seconds.</p>
+                </div>
+                <div class="agent-card">
+                    <div class="agent-name">Rafael Teixeira</div>
+                    <div class="agent-role">Manager & Operations Lead</div>
+                    <p>Builds weekly schedules around your flight roster, study deadlines, and energy limits.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skill Repository -->
+        <section>
+            <h2>⚡ Custom Skill Repository</h2>
+            <div class="grid-3">
+                <div class="skill-card">
+                    <div class="skill-title">build-launch-schedule</div>
+                    <p>Maps out 4-week milestones around busy work rosters and rest limits.</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-title">session-tech-checklist</div>
+                    <p>Quick pre-session hardware checks and internet failure backup plans.</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-title">design-session-experience</div>
+                    <p>Shapes unique session names, emotional goals, and guest greetings.</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-title">post-session-followup</div>
+                    <p>Generates personalized attendee thank-yous and testimonial prompts.</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-title">harden-public-claims</div>
+                    <p>Vets marketing copy against rigorous exercise science and safety standards.</p>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            Angeli's Online Gym Transformation Hub &bull; Powered by AI Persona & Skill Frameworks
+        </footer>
+    </div>
+
+    <script>
+        let timeLeft = 60;
+        let timerId = null;
+        const display = document.getElementById('timerDisplay');
+        const startBtn = document.getElementById('startBtn');
+
+        function updateDisplay() {
+            let minutes = Math.floor(timeLeft / 60);
+            let seconds = timeLeft % 60;
+            display.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        }
+
+        function startTimer() {
+            if (timerId !== null) return;
+            startBtn.textContent = 'Running...';
+            timerId = setInterval(() => {
+                if (timeLeft > 0) {
+                    timeLeft--;
+                    updateDisplay();
+                } else {
+                    clearInterval(timerId);
+                    timerId = null;
+                    startBtn.textContent = 'Start Timer';
+                    alert('🎉 Interval complete! Great job!');
+                }
+            }, 1000);
+        }
+
+        function pauseTimer() {
+            clearInterval(timerId);
+            timerId = null;
+            startBtn.textContent = 'Resume';
+        }
+
+        function resetTimer() {
+            clearInterval(timerId);
+            timerId = null;
+      end      timeLeft = 60;
+            updateDisplay();
+            startBtn.textContent = 'Start Timer';
+        }
+    </script>
+</body>
+</html>
